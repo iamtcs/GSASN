@@ -1,0 +1,19 @@
+Epoch:0000,Loss:11.3881,Time:1.28 mins
+Epoch:0001,Loss:7.5216,Time:1.32 mins
+Epoch:0002,Loss:7.4979,Time:1.27 mins
+Epoch:0003,Loss:7.4313,Time:1.27 mins
+Epoch:0004,Loss:7.3881,Time:1.25 mins
+Epoch:0005,Loss:7.3508,Time:1.27 mins
+Epoch:0006,Loss:7.3329,Time:1.24 mins
+Epoch:0007,Loss:7.2805,Time:1.29 mins
+Epoch:0008,Loss:7.1747,Time:1.30 mins
+Epoch:0009,Loss:7.0989,Time:1.38 mins
+every TM time: 12.827146965762132 ms
+---------------- 1 ----------------
+mse: 0.0003972992
+mae: 0.0056611155
+rmse: 0.019932365956815717
+r2: tensor(0.8960)
+Total params: 27537
+Trainable params: 27537
+Non-trainable params: 0

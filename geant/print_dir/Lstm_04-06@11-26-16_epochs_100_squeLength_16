@@ -1,0 +1,184 @@
+每个TM测试时间: 5.449386290562005 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.006290143
+mae: 0.06276437
+rmse: 0.07931042106851979
+r2: tensor(-0.6470)
+---------------- 1 ----------------
+Epoch:0000,Loss:0.6919,Time:0.02 mins
+每个TM测试时间: 5.362893328254605 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.0015140079
+mae: 0.017620271
+rmse: 0.038910254682641
+r2: tensor(0.6036)
+---------------- 1 ----------------
+Epoch:0001,Loss:0.3007,Time:0.02 mins
+Epoch:0002,Loss:0.2114,Time:0.02 mins
+Epoch:0003,Loss:0.2076,Time:0.02 mins
+Epoch:0004,Loss:0.2048,Time:0.02 mins
+Epoch:0005,Loss:0.2023,Time:0.02 mins
+Epoch:0006,Loss:0.2006,Time:0.02 mins
+Epoch:0007,Loss:0.1982,Time:0.02 mins
+Epoch:0008,Loss:0.1965,Time:0.02 mins
+Epoch:0009,Loss:0.1953,Time:0.02 mins
+每个TM测试时间: 5.498824296174226 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00044128846
+mae: 0.0062047187
+rmse: 0.02100686695142163
+r2: tensor(0.8845)
+---------------- 1 ----------------
+Epoch:0010,Loss:0.1937,Time:0.02 mins
+Epoch:0011,Loss:0.1932,Time:0.02 mins
+Epoch:0012,Loss:0.1922,Time:0.02 mins
+Epoch:0013,Loss:0.1913,Time:0.02 mins
+Epoch:0014,Loss:0.1908,Time:0.02 mins
+Epoch:0015,Loss:0.1905,Time:0.02 mins
+Epoch:0016,Loss:0.1899,Time:0.02 mins
+Epoch:0017,Loss:0.1895,Time:0.02 mins
+Epoch:0018,Loss:0.1893,Time:0.02 mins
+Epoch:0019,Loss:0.1889,Time:0.02 mins
+每个TM测试时间: 5.9807271133234465 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.0004261452
+mae: 0.0058275345
+rmse: 0.02064328491929382
+r2: tensor(0.8884)
+---------------- 1 ----------------
+Epoch:0020,Loss:0.1889,Time:0.02 mins
+Epoch:0021,Loss:0.1889,Time:0.02 mins
+Epoch:0022,Loss:0.1884,Time:0.02 mins
+Epoch:0023,Loss:0.1883,Time:0.02 mins
+Epoch:0024,Loss:0.1885,Time:0.02 mins
+Epoch:0025,Loss:0.1883,Time:0.02 mins
+Epoch:0026,Loss:0.1884,Time:0.02 mins
+Epoch:0027,Loss:0.1880,Time:0.02 mins
+Epoch:0028,Loss:0.1881,Time:0.02 mins
+Epoch:0029,Loss:0.1881,Time:0.02 mins
+每个TM测试时间: 5.461742848525812 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00042342473
+mae: 0.0061080065
+rmse: 0.020577286791683698
+r2: tensor(0.8891)
+---------------- 1 ----------------
+Epoch:0030,Loss:0.1879,Time:0.02 mins
+Epoch:0031,Loss:0.1877,Time:0.02 mins
+Epoch:0032,Loss:0.1880,Time:0.02 mins
+Epoch:0033,Loss:0.1879,Time:0.02 mins
+Epoch:0034,Loss:0.1878,Time:0.02 mins
+Epoch:0035,Loss:0.1877,Time:0.02 mins
+Epoch:0036,Loss:0.1875,Time:0.02 mins
+Epoch:0037,Loss:0.1874,Time:0.02 mins
+Epoch:0038,Loss:0.1873,Time:0.02 mins
+Epoch:0039,Loss:0.1869,Time:0.02 mins
+每个TM测试时间: 5.78301629902404 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00042157102
+mae: 0.005579689
+rmse: 0.02053219475443187
+r2: tensor(0.8896)
+---------------- 1 ----------------
+Epoch:0040,Loss:0.1871,Time:0.02 mins
+Epoch:0041,Loss:0.1866,Time:0.02 mins
+Epoch:0042,Loss:0.1876,Time:0.02 mins
+Epoch:0043,Loss:0.1867,Time:0.02 mins
+Epoch:0044,Loss:0.1867,Time:0.02 mins
+Epoch:0045,Loss:0.1864,Time:0.02 mins
+Epoch:0046,Loss:0.1862,Time:0.02 mins
+Epoch:0047,Loss:0.1862,Time:0.02 mins
+Epoch:0048,Loss:0.1863,Time:0.02 mins
+Epoch:0049,Loss:0.1859,Time:0.02 mins
+每个TM测试时间: 5.350542657169296 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00041885534
+mae: 0.005443714
+rmse: 0.020465955707320432
+r2: tensor(0.8903)
+---------------- 1 ----------------
+Epoch:0050,Loss:0.1860,Time:0.02 mins
+Epoch:0051,Loss:0.1857,Time:0.02 mins
+Epoch:0052,Loss:0.1856,Time:0.02 mins
+Epoch:0053,Loss:0.1862,Time:0.02 mins
+Epoch:0054,Loss:0.1855,Time:0.02 mins
+Epoch:0055,Loss:0.1854,Time:0.02 mins
+Epoch:0056,Loss:0.1853,Time:0.02 mins
+Epoch:0057,Loss:0.1852,Time:0.02 mins
+Epoch:0058,Loss:0.1853,Time:0.02 mins
+Epoch:0059,Loss:0.1853,Time:0.02 mins
+每个TM测试时间: 5.511160250063296 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00041788575
+mae: 0.0052273194
+rmse: 0.02044225400738225
+r2: tensor(0.8906)
+---------------- 1 ----------------
+Epoch:0060,Loss:0.1847,Time:0.02 mins
+Epoch:0061,Loss:0.1851,Time:0.02 mins
+Epoch:0062,Loss:0.1846,Time:0.02 mins
+Epoch:0063,Loss:0.1847,Time:0.02 mins
+Epoch:0064,Loss:0.1850,Time:0.02 mins
+Epoch:0065,Loss:0.1847,Time:0.02 mins
+Epoch:0066,Loss:0.1845,Time:0.02 mins
+Epoch:0067,Loss:0.1843,Time:0.02 mins
+Epoch:0068,Loss:0.1842,Time:0.02 mins
+Epoch:0069,Loss:0.1842,Time:0.02 mins
+每个TM测试时间: 5.708876951241199 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00041651347
+mae: 0.005143058
+rmse: 0.02040866174428079
+r2: tensor(0.8909)
+---------------- 1 ----------------
+Epoch:0070,Loss:0.1846,Time:0.02 mins
+Epoch:0071,Loss:0.1844,Time:0.02 mins
+Epoch:0072,Loss:0.1840,Time:0.02 mins
+Epoch:0073,Loss:0.1839,Time:0.02 mins
+Epoch:0074,Loss:0.1843,Time:0.02 mins
+Epoch:0075,Loss:0.1839,Time:0.02 mins
+Epoch:0076,Loss:0.1840,Time:0.02 mins
+Epoch:0077,Loss:0.1839,Time:0.02 mins
+Epoch:0078,Loss:0.1836,Time:0.02 mins
+Epoch:0079,Loss:0.1836,Time:0.02 mins
+每个TM测试时间: 5.437026789158951 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.00041629322
+mae: 0.005638097
+rmse: 0.020403264846675245
+r2: tensor(0.8910)
+---------------- 1 ----------------
+Epoch:0080,Loss:0.1838,Time:0.02 mins
+Epoch:0081,Loss:0.1837,Time:0.02 mins
+Epoch:0082,Loss:0.1837,Time:0.02 mins
+Epoch:0083,Loss:0.1836,Time:0.02 mins
+Epoch:0084,Loss:0.1835,Time:0.02 mins
+Epoch:0085,Loss:0.1836,Time:0.02 mins
+Epoch:0086,Loss:0.1835,Time:0.02 mins
+Epoch:0087,Loss:0.1834,Time:0.02 mins
+Epoch:0088,Loss:0.1835,Time:0.02 mins
+Epoch:0089,Loss:0.1836,Time:0.02 mins
+每个TM测试时间: 5.2763827053117165 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.0004181373
+mae: 0.006961496
+rmse: 0.020448405642224856
+r2: tensor(0.8905)
+---------------- 1 ----------------
+Epoch:0090,Loss:0.1844,Time:0.02 mins
+Epoch:0091,Loss:0.1832,Time:0.02 mins
+Epoch:0092,Loss:0.1834,Time:0.02 mins
+Epoch:0093,Loss:0.1833,Time:0.02 mins
+Epoch:0094,Loss:0.1835,Time:0.02 mins
+Epoch:0095,Loss:0.1830,Time:0.02 mins
+Epoch:0096,Loss:0.1830,Time:0.02 mins
+Epoch:0097,Loss:0.1830,Time:0.02 mins
+Epoch:0098,Loss:0.1829,Time:0.02 mins
+Epoch:0099,Loss:0.1828,Time:0.02 mins
+每个TM测试时间: 5.41234016418457 毫秒（ms）
+---------------- 1 ----------------
+mse: 0.0004136624
+mae: 0.005924593
+rmse: 0.02033869230686348
+r2: tensor(0.8917)
+---------------- 1 ----------------

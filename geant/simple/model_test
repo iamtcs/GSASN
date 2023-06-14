@@ -1,0 +1,311 @@
+import  numpy as np
+import  torch
+import  torch.nn as nn
+import  torch.optim as optim
+import math
+from    matplotlib import pyplot as plt
+from torch.nn.parameter import Parameter
+# from data import getDataByNode,getData
+from torch.utils.data import Dataset,DataLoader
+# from sklearn.preprocessing import MinMaxScaler,StandardScaler
+# from torchinfo import summary
+from math import sqrt
+
+
+class TestNet(nn.Module):
+
+    def __init__(self ,N,bias=False):
+        super(TestNet, self).__init__()
+
+        # self.rnn = nn.RNN(
+        #     input_size=input_size,
+        #     hidden_size=hidden_size,
+        #     num_layers=1,
+        #     batch_first=True,
+        # )
+        # for p in self.rnn.parameters():
+        #     nn.init.normal_(p, mean=0.0, std=0.001)
+
+        # self.linear = nn.Linear(2, 1)
+        self.weight = Parameter(torch.FloatTensor(N,N,2))  # input_features, out_features
+        if bias:
+            self.bias = Parameter(torch.FloatTensor(N))
+        else:
+            self.register_parameter('bias', None)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        stdv = 1. / math.sqrt(self.weight.size(2))
+        self.weight.data.uniform_(-stdv, stdv)  # 随机化参数
+        if self.bias is not None:
+            self.bias.data.uniform_(-stdv, stdv)
+
+    def forward(self, x):
+        # out, hidden_prev = self.rnn(x, hidden_prev)
+        # # [b, seq, h]
+        # out = out.view(-1, hidden_size)
+        out = torch.mul(x,self.weight)
+        # out=self.linear(out)
+        # out = out.unsqueeze(dim=0)
+        out=torch.sum(out,dim=-1,keepdim=True)
+        if self.bias is not None:
+            return out + self.bias
+        else:
+            return out
+        return out
+
+
+def product_data(B,N):
+    data_npz = np.load('./geant_norm.npz')
+    data = data_npz["data"]  # [N,N,T]
+    data=data.transpose([2,0,1]) # [T,N,N]
+    nump1=np.random.rand(data.shape[0]-1,data.shape[1],data.shape[2],1)
+    nump2 = data.reshape(data.shape[0],data.shape[1],data.shape[2],1)
+    x=np.concatenate((nump1,nump2[:-1]),axis=3)
+    y=nump2[1:]
+    # print(nump1)
+    # print(nump2)
+    # print(x)
+    index=math.floor(x.shape[0]*0.7)
+    train_x=x[:index,:]
+    train_y=y[:index,:]
+    test_x = x[index:, :]
+    test_y = y[index:, :]
+    return torch.tensor(train_x),torch.tensor(train_y),torch.tensor(test_x),torch.tensor(test_y)
+
+
+def recover_data(max_data, min_data, data):
+    mid = min_data
+    base = max_data - min_data
+    recovered_data = data * base + mid
+    return recovered_data
+
+def print_image(pre_y,true_y):
+    data_npz = np.load('./geant_norm.npz')
+    base,data = data_npz["base"],data_npz["data"]
+    pre_y=pre_y.view(pre_y.size(0),pre_y.size(1),pre_y.size(2)).permute([1,2,0])
+    true_y = true_y.view(true_y.size(0), true_y.size(1),true_y.size(2)).permute([1, 2, 0])
+    recovered_predict = recover_data(max_data=base[0], min_data=base[1],
+                                              data=pre_y.detach().numpy())
+    recovered_true = recover_data(max_data=base[0], min_data=base[1],
+                                     data=true_y.detach().numpy())
+    plt.plot(recovered_true[1,17,-200:-1],color='b',label="true_y")
+    plt.plot(recovered_predict[1,17,-200:-1], color='r',label="predict_y")
+    plt.legend()
+    plt.show()
+
+def product_img():
+
+    num_time_steps = 50
+    # input_size = 1
+    # hidden_size = 16
+    output_size = 1
+    lr=0.01
+
+
+
+    model = TestNet(N=23)
+    # batch_size = 64
+    # summary(model, input_size=(batch_size, 1, 1))
+
+    criterion = nn.MSELoss()
+    optimizer = optim.Adam(model.parameters(), lr)
+
+    # 数据处理
+    time_stamp = 1
+    # node=34
+
+    B=10000
+    train_x, train_y, test_x, test_y=product_data(B=B,N=23)
+
+    train_bfb=[]
+    valid_bfb=[]
+    # for  i in range(len(train_y)-1):
+    #     if train_y[i]!=0:
+    #         train_bfb.append((train_y[i+1]-train_y[i])/train_y[i])
+    #     else:
+    #         train_bfb.append(1)
+    #
+    # for  i in range(len(valid_y)-1):
+    #     if valid_y[i]!=0:
+    #         valid_bfb.append((valid_y[i+1]-valid_y[i])/valid_y[i])
+    #     else:
+    #         valid_bfb.append(1)
+    # x_train,y_train=torch.tensor(train_bfb[:-1]),torch.tensor(train_bfb[1:])
+    # print("x_train:",x_train.shape)
+    # print("y_train:",y_train.shape)
+    # x_valid,y_valid=valid_bfb[:-1],valid_bfb[1:]
+
+    class CustomDataset(Dataset):
+        def __init__(self,x,y):
+            self.x=x
+            self.y=y
+        def __len__(self):
+            return len(self.x)
+        def __getitem__(self, idx):
+            return self.x[idx],self.y[idx]
+
+    training_data = CustomDataset(train_x, train_y)
+
+    # hidden_prev = torch.zeros(1, 1, hidden_size)
+
+    # 训练模型
+    for epoch in range(50):
+        # start = np.random.randint(3, size=1)[0]
+        # time_steps = np.linspace(start, start + 10, num_time_steps)
+        # data = np.sin(time_steps)
+        # data = data.reshape(num_time_steps, 1)
+        # x = torch.tensor(data[:-1]).float().view(1, num_time_steps - 1, 1)
+        # y = torch.tensor(data[1:]).float().view(1, num_time_steps - 1, 1)
+
+        batch_size=50
+        train_dataloader = DataLoader(training_data, batch_size=batch_size)
+        train_iter = iter(train_dataloader)
+        for batch, (train_features, train_labels) in enumerate(train_iter):
+            x = torch.tensor(train_features).float()
+            y = torch.tensor(train_labels).float()
+
+            output = model(x)
+            # hidden_prev = hidden_prev.detach()
+
+            loss = criterion(output, y)
+            model.zero_grad()
+            loss.backward()
+            # for p in model.parameters():
+            #     print(p.grad.norm())
+            # torch.nn.utils.clip_grad_norm_(p, 10)
+
+            # if epoch % 100 == 0:
+                # print("------------------------------------")
+                # for p in model.parameters():
+                #     print(p.grad.norm())
+                # print("------------------------------------")
+                # for name, parameters in model.named_parameters():
+                #     print(name, ':', parameters)
+            optimizer.step()
+            for param in model.state_dict():
+                print(param)
+                if param=="weight":
+                    print(model.state_dict()[param][1,17])
+        # if epoch % 2 == 0:
+        #     for name, parameters in model.named_parameters():
+        #         print(name, ':', parameters[1])
+
+        if epoch % 3 == 0:
+            print("---------------{}--------------".format(epoch))
+            print("Iteration: {} loss {}".format(iter, loss.item()))
+
+    # start = np.random.randint(3, size=1)[0]
+    # start=12
+    # time_steps = np.linspace(start, start + 10, num_time_steps)
+    # data = np.sin(time_steps)
+    # data = data.reshape(num_time_steps, 1)
+    # x = torch.tensor(data[:-1]).float().view(1, num_time_steps - 1, 1)
+    # y = torch.tensor(data[1:]).float().view(1, num_time_steps - 1, 1)
+
+    test_x = torch.tensor(test_x).float()
+    test_y = torch.tensor(test_y).float()
+    pre=model(test_x)
+    print_image(pre,test_y)
+    # test_y=test_y.view(-1)
+    # pre = pre.view(-1)
+
+    # predictions = []
+    # input = torch.tensor(test_x).float()
+    # # print("input:",input.shape)
+    # # print("input:",input)
+    # for i in range(len(test_x)):
+    #   # print("i:",i)
+    #   input1=input[i]
+    #   # print("input:",input);
+    #   # input1 = input1.view(1, 1, 1)
+    #   # print("input:",input);
+    #   pred = model(input1)
+    #   # input = pred
+    #   # print("pred:",pred);
+    #   predictions.append(pred.detach().numpy().ravel()[0])
+
+    # predictions=model(torch.tensor(valid_x).float(), hidden_prev)
+
+    # print("predictions:",pre)
+    # print("true:",test_y)
+
+    # plt.plot(np.arange(len(pre.detach().numpy()[:100])), pre.detach().numpy()[:100], label="GMAN_predict_y", color='r')
+    # plt.plot(np.arange(len(test_y.detach().numpy()[:100])), test_y.detach().numpy()[:100], label="true_y", color='b')
+    # plt.legend()
+    # plt.show()
+
+    # print("predictions:",predictions.shape)
+    # print(len(predictions))
+    # y_valid=scaler1.inverse_transform(np.array(y_valid).reshape(-1,1))
+    # predictions=scaler1.inverse_transform(np.array(predictions).reshape(-1,1))
+
+    # valid_y=scaler1.inverse_transform(valid_y.reshape(-1,1))
+    # predictions=scaler1.inverse_transform(np.array(predictions).reshape(-1,1))
+    # valid_y=valid_y.reshape(-1)
+    # predictions=predictions.reshape(-1)
+
+    # try:
+    #     print("mape start")
+    #     mape = np.mean(np.abs((valid_y - predictions) / valid_y)) * 100
+    #     # 原生实现
+    #     # 衡量线性回归的MSE 、 RMSE、 MAE、r2
+    #     mse = np.sum((valid_y - predictions) ** 2) / len(valid_y)
+    #     rmse = sqrt(mse)
+    #     mae = np.sum(np.absolute(valid_y - predictions)) / len(valid_y)
+    #     r2 = 1 - mse / np.var(valid_y)  # 均方误差/方差
+    #     print(" mae:", mae, "mse:", mse, " rmse:", rmse, " r2:", r2)
+    #     print("node:"+str(node)+" mape:", str(mape))
+    # except Exception as err:
+    #     mape=-1
+    # plt.plot(np.arange(len(predictions)), predictions, label="GMAN_predict_y", color='r')
+    # plt.plot(np.arange(len(valid_y)), valid_y, label="true_y", color='b')
+    # plt.legend()
+    # plt.title("GMAN+@+node:"+str(node)+"#"+str(mape))
+    # f = plt.gcf()  #获取当前图像
+    # f.savefig("./images"+"/node#"+str(node)+".png")
+    # plt.show()
+    #
+    # f.clear()  #释放内存
+    #
+    # print("valid_y:",valid_y.shape)
+    # print("predictions:",predictions.shape)
+
+    # mape=np.mean(np.abs((predictions-y_valid)/y_valid)*100)
+
+    # x = x.data.numpy().ravel()
+    # y = y.data.numpy()
+    # plt.scatter(time_steps[:-1], x.ravel(), s=90)
+    # plt.plot(time_steps[:-1], x.ravel())
+    #
+    # plt.scatter(time_steps[1:], predictions)
+    # plt.show()
+
+
+# product_img(41)
+if __name__=='__main__':
+    # product_data(5,5)
+    product_img()
+
+    # a=torch.tensor([[[2,1],[3,1]],[[1,1],[1,1]]])
+    # b = torch.tensor([[[[2, 2], [3, 3]],[[2, 1], [3, 3]]],[[[2, 2], [3, 3]],[[2, 1], [3, 2]]]])
+    # c=a*b
+    # print(c)
+    # print(c[:, :, 0])
+    # print(c[:, :, 1])
+    # c = c[:, :, 0]+ c[:, :, 1]
+    #
+    # print(c)
+
+    # out=torch.randn(2,3,requires_grad=True)
+    # print(out)
+
+    # x1 = torch.randn(3, 4).unsqueeze(-1)
+    # x2 = torch.randn(3, 4).unsqueeze(-1)
+    # x3=torch.cat((x1, x2), -1)
+    # print(x1)
+    # print(x2)
+    # print(x3)
+
+# for i in range(23*23):
+#     product_img(i)
